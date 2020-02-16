@@ -78,7 +78,9 @@ class Graph:
 
         This should be done using recursion.
         """
-        pass  # TODO
+        stack = Stack()
+        visited = set()
+        stack.push(starting_vertex)
 
     def bfs(self, starting_vertex, destination_vertex):
         """
