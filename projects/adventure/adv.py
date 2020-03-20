@@ -29,6 +29,29 @@ player = Player(world.starting_room)
 # traversal_path = ['n', 'n']
 traversal_path = []
 
+directions = {'n':'s', 's':'n', 'e':'w', 'w':'e'}
+# create path to know where we're at, and a dictionary of visited rooms
+path = []
+rooms_visited = {}
+
+rooms_visited[player.current_room.id] = player.current_room.get_exits() # get initial exits for the current room which is 0
+ 
+while len(rooms_visited) < len(room_graph) - 1: # while we have no yet traversed the whole room/maze
+    if player.current_room.id not in rooms_visited:
+        rooms_visited[player.current_room.id] = player.current_room.get_exits() # get exits from the room we're in
+        last_direction = path[-1]
+        rooms_visited[player.current_room.id].remove(last_direction)
+
+    while len(rooms_visited[player.current_room.id]) < 1:
+        last_direction = path.pop()
+        traversal_path.append(last_direction)
+        player.travel(last_direction)
+    
+    move_direction = rooms_visited[player.current_room.id].pop()
+    traversal_path.append(move_direction)
+    path.append(directions[move_direction])
+    player.travel(move_direction)
+
 
 
 # TRAVERSAL TEST
